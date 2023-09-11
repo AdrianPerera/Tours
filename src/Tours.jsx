@@ -1,33 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Tour from "./Tour.jsx";
-import Loading from "./Loading.jsx";
 
-const Tours = ({url}) => {
+const Tours = ({tours , removeTour}) => {
 
-    const [tours, setTours] = useState([])
-    const [loading ,setLoading] = useState(false);
-    useEffect(() => {
-        setLoading(true);
-        fetchTours();
-    }, [])
+    return (<section>
+            <div className="title">
+                <h2> Our Tours</h2>
+                <div className="title-underline"></div>
 
-    async function fetchTours() {
-        let tours = await fetch(url).then(r => r.json());
-        console.log(tours);
-        setTours(tours);
-        setLoading(false);
-    }
-
-    return (
-        <section>
+            </div>
             <div className="tours">
-                {loading && <Loading/>
-                }
                 {tours?.map((tour => {
-                        return <Tour key={tour.id} {...tour}/>
-                    }
-                ))
-                }
+                        return <Tour key={tour.id} {...tour} removeTour={removeTour}/>
+                    }))}
             </div>
         </section>
 
